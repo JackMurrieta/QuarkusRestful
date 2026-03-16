@@ -6,12 +6,14 @@ import Entity.Orden;
 import Entity.OrdenDetalle;
 import Repository.OrdenDetalleRepository;
 import Repository.OrdenRepository;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.util.List;
 
+@ApplicationScoped
 public class OrdenService implements IOrdenService {
     @Inject
     OrdenRepository ordenRepository;
