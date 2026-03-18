@@ -37,5 +37,16 @@ public class ProductoResource {
         return Response.ok(dto).build();
     }
 
+    @PATCH
+    @Path("/{id}/stock")
+    public Response actualizarStock(@PathParam("id") Long id, @QueryParam("cantidad") int cantidad) {
+        if (cantidad <= 0) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("La cantidad debe ser mayor a 0")
+                    .build();
+        }
 
+        productoService.actualizarProductoStock(id, cantidad);
+        return Response.ok("Stock actualizado correctamente").build();
+    }
 }

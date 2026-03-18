@@ -26,6 +26,11 @@ public class ProductoService implements IProductoService {
         return toDTO(entity);
     }
 
+    @Override
+    public void actualizarProductoStock(Long idProducto, int cantidad) {
+        productoRepository.actualizarProductoStock(idProducto, cantidad);
+    }
+
     private ProductoDTO toDTO(Producto producto) {
         ProductoDTO dto = new ProductoDTO();
         dto.id = producto.id;

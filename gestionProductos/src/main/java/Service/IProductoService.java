@@ -10,4 +10,6 @@ public interface IProductoService {
 
     ProductoDTO findById(Long id);
 
+    void actualizarProductoStock(Long idProducto, int cantidad);
+
 }

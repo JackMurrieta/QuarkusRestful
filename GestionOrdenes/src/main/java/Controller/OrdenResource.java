@@ -1,8 +1,8 @@
 package Controller;
 
 import DTO.OrdenDetalleDTO;
+import Entity.Orden;
 import Service.IOrdenService;
-import Service.OrdenService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -33,5 +33,28 @@ public class OrdenResource {
                 .build();
     }
 
+    //GET /ordenes para que devuelva la lista de órdenes realizadas.
+
+    @GET
+    public Response getAll() {
+        //crear response
+        List<Orden> ordenes = ordenService.findAll();
+        return Response.status(Response.Status.OK).entity(ordenes).build();
+    }
+
+
+    //GET /ordenes/id para que devuelva una orden en particular.
+    @GET
+    @Path("/{id}")
+    public Response getById(@PathParam("id") Long id) {
+        Orden orden = ordenService.findById(id);
+
+        if (orden == null) {
+            return Response.status(Response.Status.NOT_FOUND).
+                    entity("orden no encontrada").
+                    build();
+        }
+        return Response.status(Response.Status.OK).entity(orden).build();
+    }
 
 }
