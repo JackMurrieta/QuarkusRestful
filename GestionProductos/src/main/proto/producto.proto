@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.itson.grpc";
+
+package producto;
+
+// SERVICIO
+
+service ProductoService {
+
+  // Verifica existencia y obtiene un producto por ID
+  rpc VerificarYObtener (ProductoRequest) returns (ProductoResponse);
+
+  // Obtiene la lista de todos los productos
+  rpc ObtenerTodos (Empty) returns (ListaProductosResponse);
+
+  // Actualiza el stock de un producto
+  rpc ActualizarProductoStock (ProductoUpdateRequest) returns (Empty);
+}
+
+// MENSAJES DE REQUEST
+
+// Request para buscar un producto por su ID
+message ProductoRequest {
+  int64 id = 1;
+}
+
+// Request para actualizar el stock de un producto
+message ProductoUpdateRequest {
+  int64 id_producto = 1;
+  int64 cantidad = 2;
+}
+
+message Empty {}
+
+// MENSAJES DE RESPONSE
+
+// Respuesta con los datos de un solo producto
+message ProductoResponse {
+  int64  id = 1;
+  string nombre = 2;
+  double precio = 3;
+  int32  stock_disponible = 4;
+}
+
+// Respuesta con la lista de todos los productos
+message ListaProductosResponse {
+  repeated ProductoResponse productos = 1;
+}
+
+//METODOS DE ORDENES
+
+service OrdenService {
+
+  // POST - Crea una nueva orden a partir de una lista de detalles
+  rpc CrearOrden (CrearOrdenRequest) returns (Empty);
+
+  // GET /ordenes - Devuelve todas las órdenes
+  rpc ObtenerTodos (Empty) returns (ListaOrdenesResponse);
+
+  // GET /ordenes/{id} - Devuelve una orden en particular
+  rpc ObtenerPorId (OrdenRequest) returns (OrdenResponse);
+}
+
+
+// Request para buscar una orden por ID
+message OrdenRequest {
+  int64 id = 1;
+}
+
+// Request para crear una orden: lista de detalles (mapea OrdenDetalleDTO)
+message CrearOrdenRequest {
+  repeated OrdenDetalleDTO detalles = 1;
+}
+
+// DTOs
+
+// Mapea OrdenDetalleDTO.java
+message OrdenDetalleDTO {
+  int64  id_producto = 1;
+  int32  cantidad = 2;
+  double precio = 3;
+  double precio_total = 4;
+}
+
+// MENSAJES DE RESPONSE
+
+message OrdenResponse {
+  int64  id = 1;
+  string fecha = 2;   // LocalDate serializado como "yyyy-MM-dd"
+  double total = 3;
+}
+
+message ListaOrdenesResponse {
+  repeated OrdenResponse ordenes = 1;
+}
+
+
+

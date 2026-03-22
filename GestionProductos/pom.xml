@@ -32,6 +32,13 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <!--Quarkus Dependency-->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-grpc</artifactId>
+        </dependency>
+
         <!-- REST -->
         <dependency>
             <groupId>io.quarkus</groupId>
